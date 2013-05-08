@@ -4,7 +4,6 @@
 #include "main.h"
 
 
-#include "libs/armmath.h"
 #include "libs/usb_serial.h"
 #include "libs/buttons.h"
 #include "libs/leds.h"
@@ -123,6 +122,27 @@ int main(void)
 
 void servo_output(void)
 {
+	if(m_ch4 >= -0.2f)
+	{
+		set_servo(1,m_ch2+s_ch1);
+		set_servo(2,m_ch3+s_ch2);
+		set_servo(4,m_ch2+s_ch1);
+	}
+	else
+	{
+		set_servo(1,m_ch2);
+		set_servo(2,m_ch3);
+		set_servo(4,m_ch2);
+	}
+	
+	if(m_ch4 >= 0.2f)
+	{
+		set_servo(3,m_ch1+s_ch3);
+	}
+	else
+	{
+		set_servo(3,m_ch1);
+	}
 }
 
 
