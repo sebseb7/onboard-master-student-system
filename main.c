@@ -85,6 +85,11 @@ static	float s_ch2=0.0f;
 static	float s_ch3=0.0f;
 static	float s_ch4=0.0f;
 
+static	float trim_ch2=0.0f;
+static	float trim_ch3=0.0f;
+static	float trim_ch4=0.0f;
+static	float trim_ch6=0.0f;
+
 int main(void)
 {
 	RCC_ClocksTypeDef RCC_Clocks;
@@ -122,26 +127,37 @@ int main(void)
 
 void servo_output(void)
 {
-	if(m_ch4 >= -0.2f)
+	if(m_ch5 >= 0.2f)
 	{
-		set_servo(1,m_ch2+s_ch1);
-		set_servo(2,m_ch3+s_ch2);
-		set_servo(4,m_ch2+s_ch1);
+		set_servo(1,trim_ch2+s_ch2);
+		set_servo(2,trim_ch3+s_ch3);
+		set_servo(3,s_ch1 * -1.0f );
+		set_servo(4,trim_ch4+s_ch4);
+		set_servo(5,trim_ch6+s_ch2);
+	}
+	else if(m_ch5 >= -0.2f)
+	{
+		set_servo(1,m_ch2+s_ch2);
+		set_servo(2,m_ch3+s_ch3);
+		set_servo(3,m_ch1);
+		set_servo(4,m_ch4+s_ch4);
+		set_servo(5,m_ch6+s_ch2);
+		trim_ch2 = m_ch2;
+		trim_ch3 = m_ch3;
+		trim_ch4 = m_ch4;
+		trim_ch6 = m_ch6;
 	}
 	else
 	{
 		set_servo(1,m_ch2);
 		set_servo(2,m_ch3);
-		set_servo(4,m_ch2);
-	}
-	
-	if(m_ch4 >= 0.2f)
-	{
-		set_servo(3,m_ch1+s_ch3);
-	}
-	else
-	{
 		set_servo(3,m_ch1);
+		set_servo(4,m_ch4);
+		set_servo(5,m_ch6);
+		trim_ch2 = m_ch2;
+		trim_ch3 = m_ch3;
+		trim_ch4 = m_ch4;
+		trim_ch6 = m_ch6;
 	}
 }
 
